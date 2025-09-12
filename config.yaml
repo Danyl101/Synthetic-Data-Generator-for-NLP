@@ -1,0 +1,64 @@
+project:
+  name: KeyStone
+  version: 1.0
+  author: Danyl S John
+  seed: 42
+
+paths:
+  scraping:
+    scraped_links: "Datasets/Scraping_Data/scraped_articles.json"
+    site_f'ilters: "Datasets/Scraping_Data/site_filter.json"
+
+  lstm:
+    nifty_raw_data: "Datasets/LSTM_Data/nifty_data.csv"
+    nifty_train_scaled_data: "Datasets/LSTM_Data/train_scaled.csv"
+    nifty_validation_scaled_data: "Datasets/LSTM_Data/val_scaled.csv"
+    nifty_test_scaled_data: "Datasets/LSTM_Data/test_scaled.csv"
+
+  bert:
+    labels:
+        original_label: "Datasets/BERT_Data/Labels_Data/label.csv"
+        paraphrased_label: "Datasets/BERT_Data/Labels_Data/paraphrased_labels.csv"
+
+    raw_text_data:
+      raw_data_folder: "Datasets/BERT_Data/Raw_text_data/Raw_data"
+      cleaned_data_folder: "Datasets/BERT_Data/Raw_text_data/Cleaned_data"
+      paraphrased_data_folder: "Datasets/BERT_Data/Raw_text_data/Paraphrased_data"
+      final_data_folder: "Datasets/BERT_Data/Raw_text_data/Final_Data"
+
+    model_data:
+        train_data_folder: "Datasets/BERT_Data/Model_Data/train_folder"
+        validation_data_folder: "Datasets/BERT_Data/Model_Data/val_folder"
+        test_data_folder: "Datasets/BERT_Data/Model_Data/test_folder"
+
+  model:
+    lstm:
+      nifty50 : "Checkpoints/nifty50_model.pt"
+
+    bert:
+      pretrained:
+        pegasus: "google/pegasus-xsum"
+        finbert: "yiyanghkust/finbert-tone"
+
+parameters:
+  lstm:
+    input_size : 4
+    hidden_size : 256 
+    dropout : 0.3 
+    num_layers : 2
+    batch_size : 32 
+    learning_rate : 8.238048741701306e-05
+    epochs : 75
+    optimizer : "adamw"
+
+paraphraser:
+model: google/pegasus-xsum
+max_length: 512
+num_return_sequences: 2
+num_beams : 5
+
+evaluation:
+  lstm:
+    metrics : ["mse","rmse","mae","mape"]
+    
+

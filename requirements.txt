@@ -1,0 +1,41 @@
+# Web scraping & browser automation
+selenium
+webdriver-manager
+beautifulsoup4
+newspaper3k
+playwright
+lxml
+requests
+fake-useragent
+
+# Data science & utilities
+numpy
+pandas
+tqdm
+joblib
+matplotlib
+seaborn
+
+# Machine learning & NLP
+spacy
+clean-text
+torch
+torchmetrics
+transformers
+scikit-learn
+optuna
+sentencepiece
+nltk
+gensim
+
+# Optional (if you're using TensorFlow)
+#tensorflow>=2.8
+
+# If you use HTTPX
+httpx
+flask
+flask-cors
+
+# Logging & environment management
+python-dotenv>=0.20
+pyyaml

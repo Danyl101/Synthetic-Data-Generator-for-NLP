@@ -1,0 +1,104 @@
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  standard:
+    format: "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+  simple:
+    format: "%(levelname)s: %(message)s"
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: simple
+    stream: ext://sys.stdout
+
+  Bert_Cleaner:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Bert_Cleaner.log
+    encoding: utf8
+
+  Bert_Label:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Bert_Label.log
+    encoding: utf8
+
+  Compare:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Compare.log
+    encoding: utf8
+
+  Flask:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Flask.log
+    encoding: utf8
+  
+  Extract:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Extract.log
+    encoding: utf8
+
+  Optuna:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Optuna.log
+    encoding: utf8
+  
+  Scraper:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Scraper.log
+    encoding: utf8
+
+loggers:
+  Bert_Cleaner:
+    level: DEBUG
+    handlers: [console, Bert_Cleaner]
+    propagate: no
+
+  Bert_Label:
+    level: DEBUG
+    handlers: [console, Bert_Label]
+    propagate: no
+
+  Compare:
+    level: DEBUG
+    handlers: [console, Compare]
+    propagate: no
+
+  Flask:
+    level: DEBUG
+    handlers: [console, Flask]
+    propagate: no
+
+  Extract:
+    level: DEBUG
+    handlers: [console, Extract]
+    propagate: no
+
+  Optuna:
+    level: DEBUG
+    handlers: [console, Optuna]
+    propagate: no
+
+  Scraper:
+    level: DEBUG
+    handlers: [console, Scraper]
+    propagate: no
+
+root:
+  level: WARNING
+  handlers: [console]
