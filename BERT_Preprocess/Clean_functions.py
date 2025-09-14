@@ -7,7 +7,7 @@ import traceback
 
 nlp=spacy.load("en_core_web_sm") #Loading spacy language model
 
-logger=logging.getLogger("Bert_Cleaner")
+logger=logging.getLogger("Bert_Cleaner_Functions")
 
 def regex_cleanup(text):
     try:

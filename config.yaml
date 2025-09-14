@@ -7,7 +7,7 @@ project:
 paths:
   scraping:
     scraped_links: "Datasets/Scraping_Data/scraped_articles.json"
-    site_f'ilters: "Datasets/Scraping_Data/site_filter.json"
+    site_filters: "Datasets/Scraping_Data/site_filter.json"
 
   lstm:
     nifty_raw_data: "Datasets/LSTM_Data/nifty_data.csv"

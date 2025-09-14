@@ -20,22 +20,6 @@ torch.manual_seed(42) #Sets seed to reduce randomness
 device="cuda" if torch.cuda.is_available() else "cpu"
 
 class_names=["negative","neutral","positive"] #Defines the sentiment classes
-
-class BERT_Classifier(nn.Module):
-    def __init__(self,num_classes=2,dropout=0.3,pretrained_model="yiyanghkust/finbert-tone"): #Defines bert encoder without classification
-        super(BERT_Classifier,self).__init__()
-        self.num_classes=num_classes
-        self.dropout=nn.Dropout(dropout)
-        self.bert=BertModel.from_pretrained(pretrained_model)
-        self.classifier=nn.Linear(self.bert.config.hidden_size,num_classes)
-        
-    def forward(self,input_ids,attention_mask):
-        output=self.bert(attention_mask=attention_mask,input_ids=input_ids)
-        pooled_output=output.pooler_output
-        dropped=self.dropout(pooled_output)
-        logits=self.classifier(dropped)
-        probs = torch.softmax(logits, dim=1)
-        return probs
     
 def text_encoding(texts,max_text=450,step=350):
     all_text=[]
@@ -104,7 +88,14 @@ def label_extract(Directory_name,csvpath):
                 label,probs=logits_pass(encoded) #Acquires the sentiment and its probability
                 out=label_to_csv(filepath,label,content_dir,csvpath)
                 print(probs) 
-                print(label)         
+                print(label)     
+                
+def run_bert_label():
+    paraphrased_path=config['paths']['bert']['raw_text_data']['paraphrased_data_folder']
+    original_path=config['paths']['bert']['raw_text_data']['cleaned_data_folder']
+    paraphrased_csv_path=config['paths']['bert']['labels']['paraphrased_label']
+    original_csv_path=config['paths']['bert']['labels']['original_label']
+    label_extract(paraphrased_path,paraphrased_csv_path)    
                 
 # Example usage:
 if __name__ == "__main__":
@@ -112,11 +103,7 @@ if __name__ == "__main__":
     model = AutoModelForSequenceClassification.from_pretrained("yiyanghkust/finbert-tone") #Loads finbert for classification
     model.to(device)
     model.eval()
-    paraphrased_path=config['paths']['bert']['raw_text_data']['paraphrased_data_folder']
-    original_path=config['paths']['bert']['raw_text_data']['cleaned_data_folder']
-    paraphrased_csv_path=config['paths']['bert']['labels']['paraphrased_label']
-    original_csv_path=config['paths']['bert']['labels']['original_label']
-    label_extract(paraphrased_path,paraphrased_csv_path)
+    run_bert_label()
 
         
         

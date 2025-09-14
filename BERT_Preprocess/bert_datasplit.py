@@ -1,7 +1,11 @@
 import os 
 import shutil
 import random
+import logging_loader
+import logging
 from config_loader import config
+
+logger=logging.getLogger("Bert_Datasplit")
 
 def datasplit():
     content_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..',
@@ -29,20 +33,23 @@ def datasplit():
     for f in train_files:
         shutil.copy(os.path.join(config['paths']['bert']['raw_text_data']['cleaned_data_folder'],f),
                     os.path.join(config['paths']['bert']['model_data']['train_data_folder'],f))
+        logger.info("File copied to train folder: {}".format(f))
         
     for f in val_files:
         shutil.copy(os.path.join(config['paths']['bert']['raw_text_data']['cleaned_data_folder'],f),
                     os.path.join(config['paths']['bert']['model_data']['validation_data_folder'],f))
-        
+        logger.info("File copied to validation folder: {}".format(f))
+
     for f in test_files:
         shutil.copy(os.path.join(config['paths']['bert']['raw_text_data']['cleaned_data_folder'],f),
                     os.path.join(config['paths']['bert']['model_data']['test_data_folder'],f))
-        
-    print(total)
-    print(len(train_files))
-    print(len(val_files))
-    print(len(test_files))
-    
+        logger.info("File copied to test folder: {}".format(f))
+
+    logger.info("Total files processed: {}".format(total))
+    logger.info("Training files count: {}".format(len(train_files)))
+    logger.info("Validation files count: {}".format(len(val_files)))
+    logger.info("Testing files count: {}".format(len(test_files)))
+
 if __name__=="__main__":
     datasplit()
         

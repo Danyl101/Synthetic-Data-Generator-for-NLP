@@ -12,6 +12,11 @@ deactivate
 python -m pip install  
                 (If pip is broken in venv)
 
+python -m spacy download en_core_web_sm
+
+
+
+
                             FLASK RUNNING
 
 $env:PYTHONPATH = (Get-Location).Path
@@ -23,14 +28,14 @@ SCRAPER
 
 utils
 
-$env:PYTHONPATH = "D:\Prediction_Model\Scraper\Scrape"
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\Scraper\Scrape"
 python -m Scraper.Scrape.utils
 
 ___________________________
 
 scrape run
 
-$env:PYTHONPATH = "D:\Prediction_Model\Scraper\Scrape"
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\Scraper\Scrape"
 >> python -m Scraper.Scrape.Scrape_run
 
 ___________________________
@@ -39,26 +44,26 @@ EXTRACT
 
 utils.py
 
-$env:PYTHONPATH = "D:\Prediction_Model\Scraper\Extract"
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\Scraper\Extract"
 python -m Scraper.Extract.utils
 
 Extract_run.py
 
-$env:PYTHONPATH = "D:\Prediction_Model\Scraper\Extract"
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\Scraper\Extract"
 >> python -m Scraper.Extract.Extract_run
 
                                     BiLSTM Preprocess
 
 lstm_dataextract
 
-$env:PYTHONPATH = "D:\Prediction_Model\BiLSTM_Preprocess"
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BiLSTM_Preprocess"
 python -m BiLSTM_Preprocess.lstm_dataextract
 
 ____________________________
 
 lstm_dataprocess
 
-$env:PYTHONPATH = "D:\Prediction_Model\BiLSTM_Preprocess"
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BiLSTM_Preprocess"
 python -m BiLSTM_Preprocess.lstm_dataprocess
 
 
@@ -66,64 +71,78 @@ python -m BiLSTM_Preprocess.lstm_dataprocess
                         
 lstm dataload
 
-$env:PYTHONPATH = "D:\Prediction_Model\BiLSTM_Model"     
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BiLSTM_Model"     
 python -m BiLSTM_Model.lstm_dataload
 
 ____________________________
 
 lstm model
 
-$env:PYTHONPATH = "D:\Prediction_Model\BiLSTM_Model"     
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BiLSTM_Model"     
 python -m BiLSTM_Model.lstm_model
 
 ____________________________
 
 lstm utils
 
-$env:PYTHONPATH = "D:\Prediction_Model\BiLSTM_Model"     
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BiLSTM_Model"     
 python -m BiLSTM_Model.lstm_utils
 
 ____________________________
 
 lstm main
 
-$env:PYTHONPATH = "D:\Prediction_Model\BiLSTM_Model"     
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BiLSTM_Model"     
 python -m BiLSTM_Model.main   
 
                                 BERT Preprocess
 
+Preprocess
+
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BERT_Preprocess"
+python -m BERT_Preprocess.preprocess_run 
+
+__________________________________
+
 Clean run
 
-$env:PYTHONPATH = "D:\Prediction_Model\BERT_Preprocess"
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BERT_Preprocess"
 python -m BERT_Preprocess.Clean_run 
 
 _________________________________
 
 utils 
 
-$env:PYTHONPATH = "D:\Prediction_Model\BERT_Preprocess"
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BERT_Preprocess"
 python -m BERT_Preprocess.utils
 
 _________________________________
 
 bert datasplit
 
-$env:PYTHONPATH = "D:\Prediction_Model\BERT_Preprocess"
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BERT_Preprocess"
 python -m BERT_Preprocess.bert_datasplit
 
 ________________________________
 
 bert label balancing
 
-$env:PYTHONPATH = "D:\Prediction_Model\BERT_Preprocess"
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BERT_Preprocess"
 python -m BERT_Preprocess.bert_label_balancing
 
 ________________________________
 
 bert label checker
 
-$env:PYTHONPATH = "D:\Prediction_Model\BERT_Preprocess"
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BERT_Preprocess"
 python -m BERT_Preprocess.bert_label_checker
+
+________________________________
+
+bert label
+
+$env:PYTHONPATH = "D:\Synthetic_Data_Generator\BERT_Preprocess"
+python -m BERT_Preprocess.bert_label
 
 
 

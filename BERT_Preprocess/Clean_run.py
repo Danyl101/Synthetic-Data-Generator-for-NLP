@@ -3,7 +3,9 @@ from Clean_functions import is_junk_by_short_lines, regex_cleanup, clean_financi
 from utils import pipeline, save_file
 from config_loader import config
 import logging_loader
+import logging
 
+logger=logging.getLogger("Bert_Cleaner")
 
 def run_clean():
     # Get the path to the BERT_CONTENT folder, relative to the current script
@@ -20,12 +22,10 @@ def run_clean():
             text=pipeline(text, [is_junk_by_short_lines, regex_cleanup, clean_financial_text, spacy_clean,remove_trailing_noise]) #Runs pipeline function
             
             if text is not None:
-                print(f"Processed {filename}:")
-                print(text[:])  # prints entire file 
-                print("="*50)
+                logger.info("Processed {}: {}".format(filename, text[:]))
                 save_file(filename,text) #Saves file
             else:
-                print(f"Skipped {filename} due to junk detection or empty content.")
+                logger.info("Skipped {} due to junk detection or empty content.".format(filename))
 
 if __name__=="__main__":
     run_clean()

@@ -5,7 +5,11 @@ import torch
 import transformers
 from torch.nn import CrossEntropyLoss
 from transformers import PegasusForConditionalGeneration, PegasusTokenizer
+import logging_loader
+import logging
 from config_loader import config
+
+logger=logging.getLogger("Bert_Label_Balancing")
 
 device="cuda" if torch.cuda.is_available() else "cpu"
 
@@ -31,14 +35,14 @@ def text_acquire(filename_label):
     all_text=[]
     all_filename=[]
     for filename in os.listdir(content_dir):
-        print("1")
         if filename_label.get(filename) == "positive":
-            print("2")
+            logger.info("Found positive file: {}".format(filename))
             filepath=os.path.join(content_dir,filename)
             with open(filepath,"r",encoding="utf-8")as f:
                 text=f.read()
                 all_text.append(text)
                 all_filename.append(filename)
+                logger.info("File read successfully: {}".format(filename))
     return all_text,all_filename
     
 def text_encoding(texts,max_text=450,step=350):
@@ -71,15 +75,17 @@ def save_file(content,filename):
         filepath=os.path.join(config['paths']['bert']['raw_text_data']['paraphrased_data_folder'],name)
         with open(filepath, "w",encoding="utf-8")as f:
             f.write(full_text)
+            logger.info("File saved successfully: {}".format(name))
 
-if __name__=="__main__":
+def run_bert_balancing():
     labels,filename_label=label_acquire()
     texts,filename=text_acquire(filename_label)
     encoding=text_encoding(texts)
     translated=translate(encoding)
     save_file(translated,filename)
-    
-    
+
+if __name__=="__main__":
+    run_bert_balancing()
     
 
 

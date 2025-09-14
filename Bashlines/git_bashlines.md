@@ -19,6 +19,8 @@ git add -A
 git remote add origin https://github.com/#username/#reponame.git
 git push -u origin main
 
+git push -u origin main --force
+
                     MISCELLANEOUS BASH LINES
 
 git gc --prune=now 

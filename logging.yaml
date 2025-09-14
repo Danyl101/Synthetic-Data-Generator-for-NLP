@@ -21,11 +21,39 @@ handlers:
     filename: Logs/Bert_Cleaner.log
     encoding: utf8
 
+  Bert_Cleaner_Functions:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Bert_Cleaner_Functions.log
+    encoding: utf8  
+
   Bert_Label:
     class: logging.FileHandler
     level: DEBUG
     formatter: standard
     filename: Logs/Bert_Label.log
+    encoding: utf8
+
+  Bert_Label_Checker:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Bert_Label_Checker.log
+    encoding: utf8
+
+  Bert_Datasplit:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Bert_Datasplit.log
+    encoding: utf8
+
+  Bert_Label_Balancing:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Bert_Label_Balancing.log
     encoding: utf8
 
   Compare:
@@ -69,9 +97,29 @@ loggers:
     handlers: [console, Bert_Cleaner]
     propagate: no
 
+  Bert_Cleaner_Functions:
+    level: DEBUG
+    handlers: [console, Bert_Cleaner_Functions]
+    propagate: no
+
   Bert_Label:
     level: DEBUG
     handlers: [console, Bert_Label]
+    propagate: no
+  
+  Bert_Label_Checker:
+    level: DEBUG
+    handlers: [console, Bert_Label_Checker]
+    propagate: no
+
+  Bert_Label_Balancing:
+    level: DEBUG
+    handlers: [console, Bert_Label_Balancing]
+    propagate: no
+  
+  Bert_Datasplit:
+    level: DEBUG
+    handlers: [console, Bert_Datasplit]
     propagate: no
 
   Compare:

@@ -4,14 +4,6 @@ import os
 import csv
 from config_loader import config
 
-#Basic logging
-logging.basicConfig(
-        filename=config['paths']['logs']['bert_cleaner'],
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        filemode="w",
-    )
-
 #Checks whether the files have text for each function
 def pipeline(text,funcs):
     for func in funcs:
