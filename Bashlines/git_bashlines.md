@@ -2,7 +2,7 @@
 
                             BASH LINES FOR UPDATING REPO
                     
-git add BERT_Preprocess Scraper frontend .gitignore Datasets  Journal.md requirements.txt config_loader.py config.yaml Bashlines  logging.yaml logging_loader.py 
+git add BERT_Preprocess Scraper frontend .gitignore Journal.md requirements.txt config_loader.py config.yaml Bashlines  logging.yaml logging_loader.py 
 git commit -m
 git pull origin main --rebase 
 git push origin main
