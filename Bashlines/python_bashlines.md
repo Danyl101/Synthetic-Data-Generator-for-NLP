@@ -14,8 +14,9 @@ python -m pip install
 
 python -m spacy download en_core_web_sm
 
+Remove-Item -Recurse -Force venv
 
-
+pip install -r requirements.txt
 
                             FLASK RUNNING
 
@@ -125,10 +126,10 @@ python -m BERT_Preprocess.bert_datasplit
 
 ________________________________
 
-bert label balancing
+paraphraser
 
 $env:PYTHONPATH = "D:\Synthetic_Data_Generator\BERT_Preprocess"
-python -m BERT_Preprocess.bert_label_balancing
+python -m BERT_Preprocess.paraphraser 
 
 ________________________________
 

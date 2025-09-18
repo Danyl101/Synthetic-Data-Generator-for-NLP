@@ -20,27 +20,15 @@ handlers:
     formatter: standard
     filename: Logs/Bert_Cleaner.log
     encoding: utf8
+    mode : w
 
   Bert_Cleaner_Functions:
     class: logging.FileHandler
     level: DEBUG
     formatter: standard
     filename: Logs/Bert_Cleaner_Functions.log
-    encoding: utf8  
-
-  Bert_Label:
-    class: logging.FileHandler
-    level: DEBUG
-    formatter: standard
-    filename: Logs/Bert_Label.log
-    encoding: utf8
-
-  Bert_Label_Checker:
-    class: logging.FileHandler
-    level: DEBUG
-    formatter: standard
-    filename: Logs/Bert_Label_Checker.log
-    encoding: utf8
+    encoding: utf8 
+    mode : w
 
   Bert_Datasplit:
     class: logging.FileHandler
@@ -48,13 +36,23 @@ handlers:
     formatter: standard
     filename: Logs/Bert_Datasplit.log
     encoding: utf8
+    mode : w
 
-  Bert_Label_Balancing:
+  Paraphraser:
     class: logging.FileHandler
     level: DEBUG
     formatter: standard
-    filename: Logs/Bert_Label_Balancing.log
+    filename: Logs/Paraphraser.log
     encoding: utf8
+    mode : w
+
+  Bert_Semantic:
+    class: logging.FileHandler
+    level: DEBUG
+    formatter: standard
+    filename: Logs/Bert_Semantic.log
+    encoding: utf8
+    mode : w
 
   Compare:
     class: logging.FileHandler
@@ -62,6 +60,7 @@ handlers:
     formatter: standard
     filename: Logs/Compare.log
     encoding: utf8
+    mode : w
 
   Flask:
     class: logging.FileHandler
@@ -69,6 +68,7 @@ handlers:
     formatter: standard
     filename: Logs/Flask.log
     encoding: utf8
+    mode : w
   
   Extract:
     class: logging.FileHandler
@@ -76,6 +76,7 @@ handlers:
     formatter: standard
     filename: Logs/Extract.log
     encoding: utf8
+    mode : w
 
   Optuna:
     class: logging.FileHandler
@@ -83,6 +84,7 @@ handlers:
     formatter: standard
     filename: Logs/Optuna.log
     encoding: utf8
+    mode : w
   
   Scraper:
     class: logging.FileHandler
@@ -90,6 +92,7 @@ handlers:
     formatter: standard
     filename: Logs/Scraper.log
     encoding: utf8
+    mode : w
 
 loggers:
   Bert_Cleaner:
@@ -102,24 +105,19 @@ loggers:
     handlers: [console, Bert_Cleaner_Functions]
     propagate: no
 
-  Bert_Label:
+  Paraphraser:
     level: DEBUG
-    handlers: [console, Bert_Label]
-    propagate: no
-  
-  Bert_Label_Checker:
-    level: DEBUG
-    handlers: [console, Bert_Label_Checker]
-    propagate: no
-
-  Bert_Label_Balancing:
-    level: DEBUG
-    handlers: [console, Bert_Label_Balancing]
+    handlers: [console, Paraphraser]
     propagate: no
   
   Bert_Datasplit:
     level: DEBUG
     handlers: [console, Bert_Datasplit]
+    propagate: no
+
+  Bert_Semantic:
+    level: DEBUG
+    handlers: [console, Bert_Semantic]
     propagate: no
 
   Compare:

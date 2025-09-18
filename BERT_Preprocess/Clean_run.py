@@ -7,6 +7,8 @@ import logging
 
 logger=logging.getLogger("Bert_Cleaner")
 
+path=config['paths']['bert']['raw_text_data']['cleaned_data_folder']
+
 def run_clean():
     # Get the path to the BERT_CONTENT folder, relative to the current script
     content_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..',
@@ -23,7 +25,7 @@ def run_clean():
             
             if text is not None:
                 logger.info("Processed {}: {}".format(filename, text[:]))
-                save_file(filename,text) #Saves file
+                save_file(filename,text,path) #Saves file
             else:
                 logger.info("Skipped {} due to junk detection or empty content.".format(filename))
 
