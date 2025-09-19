@@ -97,52 +97,52 @@ handlers:
 loggers:
   Bert_Cleaner:
     level: DEBUG
-    handlers: [console, Bert_Cleaner]
+    handlers: [Bert_Cleaner]
     propagate: no
 
   Bert_Cleaner_Functions:
     level: DEBUG
-    handlers: [console, Bert_Cleaner_Functions]
+    handlers: [Bert_Cleaner_Functions]
     propagate: no
 
   Paraphraser:
     level: DEBUG
-    handlers: [console, Paraphraser]
+    handlers: [Paraphraser]
     propagate: no
   
   Bert_Datasplit:
     level: DEBUG
-    handlers: [console, Bert_Datasplit]
+    handlers: [Bert_Datasplit]
     propagate: no
 
   Bert_Semantic:
     level: DEBUG
-    handlers: [console, Bert_Semantic]
+    handlers: [Bert_Semantic]
     propagate: no
 
   Compare:
     level: DEBUG
-    handlers: [console, Compare]
+    handlers: [Compare]
     propagate: no
 
   Flask:
     level: DEBUG
-    handlers: [console, Flask]
+    handlers: [Flask]
     propagate: no
 
   Extract:
     level: DEBUG
-    handlers: [console, Extract]
+    handlers: [Extract]
     propagate: no
 
   Optuna:
     level: DEBUG
-    handlers: [console, Optuna]
+    handlers: [Optuna]
     propagate: no
 
   Scraper:
     level: DEBUG
-    handlers: [console, Scraper]
+    handlers: [Scraper]
     propagate: no
 
 root:

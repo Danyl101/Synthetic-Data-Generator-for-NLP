@@ -11,12 +11,12 @@ from config_loader import config
 
 from .utils import text_acquire, text_encoding ,save_file
 
-logger=logging.getLogger("Bert_Label_Balancing")
+logger=logging.getLogger("Paraphraser")
 
-path=config['paths']['bert']['raw_text_data']['paraphrased_data_folder']
+paraphrased_path=config['paths']['bert']['raw_text_data']['paraphrased_data_folder'] # Directory to save paraphrased content to 
 
 content_dir=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..',
-                             config['paths']['bert']['raw_text_data']['cleaned_data_folder'])
+                             config['paths']['bert']['raw_text_data']['cleaned_data_folder']) #Directory containing text data
 
 device="cuda" if torch.cuda.is_available() else "cpu"
 
@@ -25,37 +25,41 @@ pegasus_model_name = config['paths']['model']['bert']['pretrained']['pegasus']
 pegasus_tokenizer=PegasusTokenizer.from_pretrained(pegasus_model_name)
 pegasus_model=PegasusForConditionalGeneration.from_pretrained(pegasus_model_name).to(device)
 
-def translate(texts, filenames, num_return_sequences=2, num_beams=5):
+def translate(texts, filenames, num_return_sequences=1, num_beams=10):
     all_results = {}  # collect results for all files
     for text, fname in zip(texts, filenames):
         paraphrases_for_file = {}  # collect all chunks for this file
         for chunk in text:
             enc = pegasus_tokenizer(
                 chunk,truncation=True,padding=True,max_length=512,return_tensors="pt"
-            )
+            ) #Tokenizes chunks using pegasus
             enc = {k: v.to(device) for k, v in enc.items()}
 
             outputs = pegasus_model.generate(
                 **enc,max_length=512,num_beams=num_beams,num_return_sequences=num_return_sequences
-            )
+            ) #Generates encodings of tokenized chunks
+            logger.info(f"Generated outputs for chunk in {fname}")
             paraphrased = pegasus_tokenizer.batch_decode(outputs, skip_special_tokens=True)
-
-            paraphrases_for_file[chunk] = paraphrased
+            paraphrases_for_file[chunk] = paraphrased 
         all_results[fname] = paraphrases_for_file
         logger.info(f"Resulting Dict {all_results}")
         logger.info(f"Paraphrasing of {fname} successful")
     return all_results
 
+#{{[]}}
 
 def run_bert_balancing():
     texts,filename=text_acquire(content_dir)
-    encoding=text_encoding(texts)
+    encoding=text_encoding(texts) 
     translated=translate(encoding,filename)
     for fname,paraphrases in translated.items():
+        combined = []
         for chunk,paraphrased_chunks in paraphrases.items():
-            #for i,paraphrased_chunk in enumerate(paraphrased_chunks):
-            save_file(fname,paraphrased_chunks,path,suffix=f"_paraphrased_")
-        
+            combined.extend(paraphrased_chunks)
+        # Join all paraphrased chunks into one text
+        full_text = "\n".join(combined)
+        # Save just one file per original
+        save_file(fname, full_text, paraphrased_path, suffix="_paraphrased")
 
 if __name__=="__main__":
     run_bert_balancing()

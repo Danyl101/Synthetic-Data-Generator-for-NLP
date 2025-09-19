@@ -8,25 +8,24 @@ logger=logging.getLogger("Bert_Semantic")
 
 from .utils import text_acquire,text_encoding
 
-
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-content_dir=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..',config['paths']['bert']['raw_text_data']['cleaned_text_data'])
+content_dir=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..',config['paths']['bert']['raw_text_data']['cleaned_data_folder'])  #Directory with text data
 
-paraphrased_dir=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..',config['paths']['bert']['raw_text_data']['paraphrased_text_data'])
+paraphrased_dir=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..',config['paths']['bert']['raw_text_data']['paraphrased_data_folder']) #Directory with paraphrased content
 
 def compute_bert_similarity(text, paraphrased_text,filename):
     results=[]
-    for fname,chunk,paraphrased_chunk in zip(text,paraphrased_text,filename):
-        for embedding,paraphrased_embedding in zip(chunk,paraphrased_chunk):
-            embeddings1 = model.encode(embedding, convert_to_tensor=True)
-            embeddings2 = model.encode(paraphrased_embedding, convert_to_tensor=True)
-            cosine_scores = util.pytorch_cos_sim(embeddings1, embeddings2).item()
-            results.append({"file": fname,
+    for fname,chunk,paraphrased_chunk in zip(text,paraphrased_text,filename): #Accesses nested content 
+        for embedding,paraphrased_embedding,chunk_filename in zip(chunk,paraphrased_chunk,fname):
+            embeddings1 = model.encode(embedding, convert_to_tensor=True) #Embedding of raw text data
+            embeddings2 = model.encode(paraphrased_embedding, convert_to_tensor=True) #Embedding of paraphrased data
+            cosine_scores = util.pytorch_cos_sim(embeddings1, embeddings2).item() #Computes cosine similairty of embeddings
+            results.append({"file": chunk_filename,
                     "original": embedding,
                     "paraphrase": paraphrased_embedding,
                     "similarity": cosine_scores
-                })
+                }) 
             logger.info(f"Computed similarity for {fname}")
     return results
 
@@ -41,8 +40,11 @@ def run():
     encoding=text_encoding(texts)
     paraphrased_texts,paraphrased_filename=text_acquire(paraphrased_dir)
     paraphrased_encoding=text_encoding(paraphrased_texts)
-    result=compute_bert_similarity(encoding,paraphrased_encoding,filename)
+    result=compute_bert_similarity(encoding,paraphrased_encoding,paraphrased_filename)
     remove_files(result,paraphrased_dir)
+    
+if __name__=="__main__":
+    run()
     
     
 

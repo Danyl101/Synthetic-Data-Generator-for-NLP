@@ -13,6 +13,8 @@ import logging_loader
 import logging
 from config_loader import config
 
+from .utils import text_encoding
+
 logger=logging.getLogger("Bert_Label")
 
 torch.manual_seed(42) #Sets seed to reduce randomness
@@ -20,17 +22,12 @@ torch.manual_seed(42) #Sets seed to reduce randomness
 device="cuda" if torch.cuda.is_available() else "cpu"
 
 class_names=["negative","neutral","positive"] #Defines the sentiment classes
-    
-def text_encoding(texts,max_text=450,step=350):
-    all_text=[]
-    for text in texts:
-        all_snippets=[]
-        for start_idx in range(0,len(text),step):
-            text_snippet=text[start_idx:start_idx+max_text]
-            all_snippets.append(text_snippet)
-        all_text.append(all_snippets)
-    return all_text
 
+paraphrased_path=config['paths']['bert']['raw_text_data']['paraphrased_data_folder']
+original_path=config['paths']['bert']['raw_text_data']['cleaned_data_folder']
+paraphrased_csv_path=config['paths']['bert']['labels']['paraphrased_label']
+original_csv_path=config['paths']['bert']['labels']['original_label']
+    
 
 def logits_pass(encodings): #Function to calculate sentiment of a text chunk
     try:
@@ -52,20 +49,6 @@ def logits_pass(encodings): #Function to calculate sentiment of a text chunk
     except Exception as e:
         logger.error("Execution failed at logits pass")
         logger.error(traceback.format_exc())   
-
-def max_pooling(probs):
-    try:
-        max_vals,_=torch.max(probs,dim=0)
-        
-        predicted_class_probs=torch.argmax(max_vals).item()
-        
-        predicted_label_probs = class_names[predicted_class_probs]
-        logger.info("Average pooling execution successful")
-    except Exception as e:
-        logger.error("Execution failed at average pooling")
-        logger.error(traceback.format_exc())
-
-    return predicted_label_probs
 
 def label_to_csv(filepath,label,content_dir,output_csv): #Saves the textfile and its corresponding sentiment to csv
     try:
@@ -89,21 +72,14 @@ def label_extract(Directory_name,csvpath):
                 out=label_to_csv(filepath,label,content_dir,csvpath)
                 print(probs) 
                 print(label)     
-                
-def run_bert_label():
-    paraphrased_path=config['paths']['bert']['raw_text_data']['paraphrased_data_folder']
-    original_path=config['paths']['bert']['raw_text_data']['cleaned_data_folder']
-    paraphrased_csv_path=config['paths']['bert']['labels']['paraphrased_label']
-    original_csv_path=config['paths']['bert']['labels']['original_label']
-    label_extract(paraphrased_path,paraphrased_csv_path)    
-                
+                                
 # Example usage:
 if __name__ == "__main__":
     tokenizer = AutoTokenizer.from_pretrained("yiyanghkust/finbert-tone") #Loads tokenizer from pretrained finbert
     model = AutoModelForSequenceClassification.from_pretrained("yiyanghkust/finbert-tone") #Loads finbert for classification
     model.to(device)
     model.eval()
-    run_bert_label()
+    label_extract(paraphrased_path,paraphrased_csv_path)    
 
         
         

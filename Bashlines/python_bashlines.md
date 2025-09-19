@@ -133,10 +133,10 @@ python -m BERT_Preprocess.paraphraser
 
 ________________________________
 
-bert label checker
+bert semantic
 
 $env:PYTHONPATH = "D:\Synthetic_Data_Generator\BERT_Preprocess"
-python -m BERT_Preprocess.bert_label_checker
+python -m BERT_Preprocess.bert_semantic
 
 ________________________________
 
