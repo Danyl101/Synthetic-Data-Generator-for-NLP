@@ -38,7 +38,6 @@ def translate(texts, filenames, num_return_sequences=1, num_beams=10):
             outputs = pegasus_model.generate(
                 **enc,max_length=512,num_beams=num_beams,num_return_sequences=num_return_sequences
             ) #Generates encodings of tokenized chunks
-            logger.info(f"Generated outputs for chunk in {fname}")
             paraphrased = pegasus_tokenizer.batch_decode(outputs, skip_special_tokens=True)
             paraphrases_for_file[chunk] = paraphrased 
         all_results[fname] = paraphrases_for_file
@@ -48,7 +47,7 @@ def translate(texts, filenames, num_return_sequences=1, num_beams=10):
 
 #{{[]}}
 
-def run_bert_balancing():
+def run_paraphrasing():
     texts,filename=text_acquire(content_dir)
     encoding=text_encoding(texts) 
     translated=translate(encoding,filename)
@@ -62,7 +61,7 @@ def run_bert_balancing():
         save_file(fname, full_text, paraphrased_path, suffix="_paraphrased")
 
 if __name__=="__main__":
-    run_bert_balancing()
+    run_paraphrasing()
     
 
 

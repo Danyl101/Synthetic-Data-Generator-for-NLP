@@ -1,9 +1,11 @@
-import os
-from Clean_functions import is_junk_by_short_lines, regex_cleanup, clean_financial_text, spacy_clean, remove_trailing_noise   
-from utils import pipeline, save_file
+import os   
 from config_loader import config
 import logging_loader
 import logging
+
+from .Clean_functions import is_junk_by_short_lines, regex_cleanup, clean_financial_text, spacy_clean, remove_trailing_noise
+
+from .utils import pipeline, save_file
 
 logger=logging.getLogger("Bert_Cleaner")
 
