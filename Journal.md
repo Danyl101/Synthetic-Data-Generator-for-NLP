@@ -163,21 +163,9 @@ ___________________________________
 
 # Iteration 4 [API]
 
-The pathing issues were caused by parent directory being executing files directory , solved this by setting a python path and then running program ,also added two new api calls one to call scraper and one to call extractor
-each executing their respective python files 
+The pathing issues were caused by parent directory being executing files directory , solved this by setting a python path and then running program ,also added two new api calls one to call scraper and one to call extractor each executing their respective python files 
 
 ___________________________________
-
-# Iteration 5 [API]
-
-So i built new api for the lstm inference , as in taking the saved models and having it look at past 60 days of data to predict the next 45 days of data , i mostly reused the code from the original lstm model with some tweaks here and there since they are essentially same , but all the package imports have caused python debugger to stop working and now i have to use bashlines exclusively and basically declare every program as a package to get the pathing to work
-
-___________________________________
-
-# Iteration 6 [API]
-
-So created an api to return the graph and metrics that were created by the lstm inference , i kept running into issues here and there like plot gui forcing flask to break , and responses not being sent to the frontend
-
 ___________________________________
 
 # Default Model [REACT]
@@ -204,5 +192,64 @@ __________________________________
 So decided to create a presentable ui in the event of any demos , instead of just using react-vite we also added tailwind and shadcn to increase the aesthetics of it , especially since shadcn provides so many boilerplates for many functions , the api calls functionality didnt change though , but the input validation became more complex due to the inputs being validated outside of app and inside inputs present in components
 
 __________________________________
+
+# Default Model [CLEANER]
+
+So the extracted txt files had junk present inside of it that was not necessary for a high quality dataset so that was cleaned using a combination of methods , regex, clean text and spacy were used initially to acquire high quality data and these were pipelined
+
+regex --> clean text --> spacy
+
+__________________________________
+
+# Iteration 1 [CLEANER]
+
+So there were still some issues with the txt files in that were some junk files that had very short words present in the nav bar that were accepted and alot of files had continue reading at the , these were removed using a 2 custom heuristics
+__________________________________
+
+# Default Model [PARAPHRASE]
+
+Decided to use a paraphrasing model instead of a backtranslation one , since backtranslation didnt introduce as much changes as needed , so the model used was pegasus which has a high level of paraphrasing capability ,so the initial stage was breaking the text down into encodings or smaller chunks , these were then tokenized and passed into the model to generate paraphrased content 
+
+_________________________________
+
+# Iteration 1 [PARAPHRASE]
+
+So a slight issue occured with the amount of nesting present , since we first have to access directory , then the files , and then acquire the chunks , there is a 3 tier hierarchy present , which made every step difficult , initial approach to this was list datastructure ,but an issue occured where we needed the filename alongside the chunks , which made list have a 3 tier structure and a matrix in the 2nd tier due to addition of files , which made it more complex , to solve this dictionary was used 
+
+_________________________________
+
+# Iteration 2 [PARAPHRASE]
+
+Since one text file had multiple chunks inside of it and had to be stored as one single file ,storing them became an issue due to no real identification properties being present in the lowest tier, so we had to go 2nd tier where filenames were present , and enumerate them accordingly with filenames being the main condition used to ensure that duplication or mismatching did not occur
+
+_________________________________
+
 # Default Model [SBERT]
+
+Decided to implement an sbert to compare semantic values between the paraphrased and original content , to ensure that lower quality content isnt passed through to the final datasets ,this was achieved by deleting paraphrased files with very high semantci scores(0.9>) and very low (<0.3) , to do this we reused the text encodings and acquiring functions previously developed and reused them in this , to ensure that no difference in parameters occurs 
+
+_________________________________
+
+# Iteration 1 [SBERT]
+
+So again the hierarchy issues present in paraphrasing presented itself , but this time it was worse since , we had to ensure hierarchy between two directories , this was handled by acquiring both at the same time , and then zipping them together to ensure synchronization , the resulting encodings semantic scores were added alongside their filename to a dictionary 
+
+________________________________
+
+# Iteration 2 [SBERT]
+
+So a slight issue occured in that multiple embeddings for a file name were present , since we check the embedded values itself and there are many embeddings present for a file depending on file size if even one embedding had differing semantic scores then the entire file was deleted , so instead of appending semantic scores directly into final dictionary , we introduced a placeholder one to hold semantic scores , then these semantic scores were averaged based on filenames , and that was used to check semantic value
+
+________________________________
+
+# Iteration 3 [SBERT]
+
+Since paraphrased content was usually shorter than original content , final embeddings had alot of empty spaces in paraphrased unlike originals , which caused a slight issue in actual semantic value of entire file ,due to these last chunks having very low semantic score , so these were removed with a custom heuristic
+
+________________________________
+
+# Iteration 5 [API]
+
+Introduced a new api call to run the entire synthetic data generation pipeline , similar to the scraper functions , but this has lazy loading due to the models being heavy and not necessary in other uses except for synthetic data generation , 
+
 
