@@ -89,7 +89,7 @@ It was built as a modular pipeline combining **web scraping, article extraction,
 |    └──Scraping_Data/
 |         ├── Scraped_articles.json
 |         └──Site_filters.json
-
+|
 └──BERT_Preprocess/
       ├── Clean_Run.py
       ├── Paraphraser.py     #Paraphraser
