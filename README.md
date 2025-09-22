@@ -127,7 +127,8 @@ npm install
 1. **Start Flask API**
 
    ```bash
-   python api/run.py
+   $env:PYTHONPATH = (Get-Location).Path
+   python -m frontend.src.api.flask_api.flask_run
    ```
 
 2. **Run Frontend**
