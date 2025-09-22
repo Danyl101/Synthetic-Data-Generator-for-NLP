@@ -3,8 +3,7 @@
 import { addfilter, addsite } from "api/typescript_api/add_api"
 import { removefilter, removesite } from "api/typescript_api/remove_api"
 import { scrape_run, extract_run } from "api/typescript_api/programs_run"
-import { lstm_run } from "api/typescript_api/lstm_api"
-
+import { synthetic_data_run } from "api/typescript_api/synthetic_data"
 
 import { FilterSiteInput } from "components/FilterSiteInput"
 import { RunButtons } from "components/RunButtons"
@@ -62,7 +61,7 @@ export default function App() {
   const actions = [
     { label: "Scrape", icon: <Play className="h-5 w-5 mr-2" />, action: scrape_run },
     { label: "Extract", icon: <List className="h-5 w-5 mr-2" />, action: extract_run },
-    { label: "Inference", icon: <BarChart className="h-5 w-5 mr-2" />, action: lstm_run },
+    { label: "Synthetic Data Generation", icon: <BarChart className="h-5 w-5 mr-2" />, action: synthetic_data_run },
   ]
 
   // ---- UI Layout ----

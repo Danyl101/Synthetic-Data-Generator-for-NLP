@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { PredictionGraph } from "../App.tsx"
-import { lstm_return } from "api/typescript_api/lstm_api"
+import { lstm_return } from "api/typescript_api/synthetic_data.ts"
 
 interface LSTM_Response{
     predictions:number[]

@@ -9,7 +9,13 @@ logger=logging.getLogger("Bert_Semantic")
 
 from .utils import text_acquire,text_encoding
 
-model = SentenceTransformer("all-MiniLM-L6-v2")
+model=None
+
+def get_sbert_model():
+    global model
+    if model is None:
+        model = SentenceTransformer("all-MiniLM-L6-v2")
+    return model
 
 content_dir=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..',config['paths']['bert']['raw_text_data']['cleaned_data_folder'])  #Directory with text data
 
@@ -47,6 +53,7 @@ def clean_chunks(chunks):
 
         
 def run_semantic_comparison():
+    get_sbert_model()
     texts,filename=text_acquire(content_dir)
     encoding=text_encoding(texts)
     paraphrased_texts,paraphrased_filename=text_acquire(paraphrased_dir)

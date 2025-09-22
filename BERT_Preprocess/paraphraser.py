@@ -20,10 +20,20 @@ content_dir=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..',
 
 device="cuda" if torch.cuda.is_available() else "cpu"
 
-pegasus_model_name = config['paths']['model']['bert']['pretrained']['pegasus']
+pegasus_model = None
+pegasus_tokenizer = None
 
-pegasus_tokenizer=PegasusTokenizer.from_pretrained(pegasus_model_name)
-pegasus_model=PegasusForConditionalGeneration.from_pretrained(pegasus_model_name).to(device)
+def get_paraphraser_model():
+    global pegasus_model, pegasus_tokenizer
+    if pegasus_model is None:
+        pegasus_model_name = config['paths']['model']['bert']['pretrained']['pegasus']
+        pegasus_model = PegasusForConditionalGeneration.from_pretrained(
+            pegasus_model_name,
+            use_safetensors=True,
+            low_cpu_mem_usage=True
+        ).to("cpu")  # keep on CPU for safety
+        pegasus_tokenizer = PegasusTokenizer.from_pretrained(pegasus_model_name)
+    return pegasus_model, pegasus_tokenizer
 
 def translate(texts, filenames, num_return_sequences=1, num_beams=10):
     all_results = {}  # collect results for all files
@@ -48,6 +58,7 @@ def translate(texts, filenames, num_return_sequences=1, num_beams=10):
 #{{[]}}
 
 def run_paraphrasing():
+    get_paraphraser_model()
     texts,filename=text_acquire(content_dir)
     encoding=text_encoding(texts) 
     translated=translate(encoding,filename)
