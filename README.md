@@ -1,4 +1,4 @@
-# 📝 Semi-Synthetic Data Generator for NLP
+# 📝 Synthetic Data Generator for NLP
 
 This project is a **semi-synthetic dataset generator for NLP tasks**, designed to scrape  news, extract article content, paraphrase it using state-of-the-art models, and filter the results for quality.
 
